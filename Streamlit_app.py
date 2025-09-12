@@ -50,6 +50,8 @@ Resposta:"""
 
         try:
             resultado = agente(prompt, max_new_tokens=100)
+            st.write("🔍 Retorno bruto do modelo:", resultado)  # Log para depuração
+
             if resultado and isinstance(resultado, list) and "generated_text" in resultado[0]:
                 resposta = resultado[0]["generated_text"]
                 resposta_formatada = resposta.split("Resposta:")[-1].strip()
@@ -59,5 +61,3 @@ Resposta:"""
             resposta_formatada = f"Erro ao gerar resposta: {e}"
 
         st.markdown(f"**Resposta:** {resposta_formatada}")
-
-
