@@ -35,6 +35,25 @@ if usuario == USUARIO and senha == SENHA:
             texto = "\n".join([p.text for p in doc.paragraphs])
             st.text_area(f"Conteúdo de {arquivo}", texto, height=300)
             conteudo_total += f"\n\nConteúdo de {arquivo}:\n{texto}"
+<<<<<<< HEAD
+=======
+
+    st.markdown("---")
+    st.subheader("🤖 Pergunte algo sobre os documentos")
+
+    pergunta = st.text_input("Digite sua pergunta")
+    if pergunta:
+        prompt = f"""Você é um assistente que responde com base nos documentos abaixo.
+Documentos:
+{conteudo_total}
+
+Pergunta: {pergunta}
+Resposta:"""
+
+        resposta = agente(prompt, max_new_tokens=300)[0]["generated_text"]
+        st.markdown(f"**Resposta:** {resposta.split('Resposta:')[-1].strip()}")
+
+>>>>>>> ae7a4f8 (Atualizando requirements com suporte a leitura de .docx e integração com modelo local)
 
     st.markdown("---")
     st.subheader("🤖 Pergunte algo sobre os documentos")

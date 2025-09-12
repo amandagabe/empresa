@@ -1,7 +1,5 @@
 streamlit
-python-docx
 transformers
 torch
 accelerate
-streamlit
-
+python-docx
