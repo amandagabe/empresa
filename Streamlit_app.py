@@ -3,10 +3,10 @@ import os
 from docx import Document
 from transformers import pipeline
 
-# Carrega o modelo local (pode ser substituído por outro)
+# Carrega o modelo leve compatível com Streamlit Cloud
 @st.cache_resource
 def carregar_agente():
-    return pipeline("text-generation", model="mistralai/Mistral-7B-Instruct-v0.1", device_map="auto")
+    return pipeline("text-generation", model="sshleifer/tiny-gpt2")
 
 agente = carregar_agente()
 
@@ -35,8 +35,6 @@ if usuario == USUARIO and senha == SENHA:
             texto = "\n".join([p.text for p in doc.paragraphs])
             st.text_area(f"Conteúdo de {arquivo}", texto, height=300)
             conteudo_total += f"\n\nConteúdo de {arquivo}:\n{texto}"
-<<<<<<< HEAD
-=======
 
     st.markdown("---")
     st.subheader("🤖 Pergunte algo sobre os documentos")
@@ -50,22 +48,6 @@ Documentos:
 Pergunta: {pergunta}
 Resposta:"""
 
-        resposta = agente(prompt, max_new_tokens=300)[0]["generated_text"]
+        resposta = agente(prompt, max_new_tokens=100)[0]["generated_text"]
         st.markdown(f"**Resposta:** {resposta.split('Resposta:')[-1].strip()}")
 
->>>>>>> ae7a4f8 (Atualizando requirements com suporte a leitura de .docx e integração com modelo local)
-
-    st.markdown("---")
-    st.subheader("🤖 Pergunte algo sobre os documentos")
-
-    pergunta = st.text_input("Digite sua pergunta")
-    if pergunta:
-        prompt = f"""Você é um assistente que responde com base nos documentos abaixo.
-Documentos:
-{conteudo_total}
-
-Pergunta: {pergunta}
-Resposta:"""
-
-        resposta = agente(prompt, max_new_tokens=300)[0]["generated_text"]
-        st.markdown(f"**Resposta:** {resposta.split('Resposta:')[-1].strip()}")
