@@ -48,6 +48,16 @@ Documentos:
 Pergunta: {pergunta}
 Resposta:"""
 
-        resposta = agente(prompt, max_new_tokens=100)[0]["generated_text"]
-        st.markdown(f"**Resposta:** {resposta.split('Resposta:')[-1].strip()}")
+        try:
+            resultado = agente(prompt, max_new_tokens=100)
+            if resultado and isinstance(resultado, list) and "generated_text" in resultado[0]:
+                resposta = resultado[0]["generated_text"]
+                resposta_formatada = resposta.split("Resposta:")[-1].strip()
+            else:
+                resposta_formatada = "Não foi possível gerar uma resposta adequada."
+        except Exception as e:
+            resposta_formatada = f"Erro ao gerar resposta: {e}"
+
+        st.markdown(f"**Resposta:** {resposta_formatada}")
+
 
